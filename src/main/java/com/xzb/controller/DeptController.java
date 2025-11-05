@@ -4,10 +4,7 @@ import com.xzb.pojo.Dept;
 import com.xzb.pojo.Result;
 import com.xzb.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +20,25 @@ public class DeptController {
         System.out.println("查询全部部门数据");
         List<Dept> deptList = deptService.findAll();
         return Result.success(deptList);
+    }
+
+    /**
+     * 删除部门 - 前端传递的请求参数名与服务端方法形参名一致，直接传递即可
+     */
+    @DeleteMapping("/depts")
+    public Result delete(Integer id) {
+        System.out.println("删除部门：" + id);
+        deptService.deleteById(id);
+        return Result.success();
+    }
+
+    /**
+     * 新增部门
+     */
+    @PostMapping("/depts")
+    public Result add(@RequestBody Dept dept) {
+        System.out.println("新增部门：" + dept);
+        deptService.add(dept);
+        return Result.success();
     }
 }
