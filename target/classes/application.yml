@@ -14,3 +14,10 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     # 开启驼峰命名映射开关，可以映射数据库字段为Java属性（原先mysql中用下划线命名的值就会变成驼峰命名）
     map-underscore-to-camel-case: true
+
+# 阿里云OSS
+aliyun:
+  oss:
+    endpoint: https://oss-cn-beijing.aliyuncs.com
+    bucketName: java-ai-xzb
+    region: cn-beijing
