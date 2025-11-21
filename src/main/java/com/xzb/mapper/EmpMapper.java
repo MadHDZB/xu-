@@ -1,8 +1,9 @@
 package com.xzb.mapper;
 
 import com.xzb.pojo.Emp;
+import com.xzb.pojo.EmpQueryParam;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -12,6 +13,15 @@ import java.util.List;
 @Mapper
 public interface EmpMapper {
 
-    @Select("select e.*, d.name deptName from emp e left join dept d on e.dept_id = d.id order by e.update_time desc")
-    public List<Emp> list();
+    /**
+     * 条件查询员工信息
+     */
+     List<Emp> list(EmpQueryParam empQueryParam);
+
+    /**
+     * 新增员工基本信息
+     */
+     @Insert("insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time)" +
+             "values (#{username}), #{name}, #{gender}, #{phone}, #{job}, #{salary}, #{image}, #{entryDate}, #{deptId}, #{createTime}, #{updateTime}")
+    void insert(Emp emp);
 }
