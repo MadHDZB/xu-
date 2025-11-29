@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzb.mapper.StuMapper">
+
+    <select id="list" resultType="com.xzb.pojo.Student">
+        select s.*, c.name class_name
+        from student s left join clazz c
+        on s.clazz_id = c.id
+        <where>
+            <if test="name != null and name != ''">
+                s.name like concat('%', #{name}, '%')
+            </if>
+            <if test="clazzId != null">
+                and s.clazz_id = #{clazzId}
+            </if>
+            <if test="degree != null">
+                and s.degree = #{degree}
+            </if>
+        </where>
+        order by s.id
+    </select>
+
+    <delete id="deleteByIds">
+        delete from student where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")" >
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="insert" parameterType="com.xzb.pojo.Student">
+        insert into student(
+        name, no, gender, phone, id_card,
+        is_college, address, degree, graduation_date,
+        <if test="clazzId != null">clazz_id,</if>
+        create_time, update_time
+        )
+        values(
+        #{name}, #{no}, #{gender}, #{phone}, #{idCard},
+        #{isCollege}, #{address}, #{degree}, #{graduationDate},
+        <if test="clazzId != null">#{clazzId},</if>
+        #{createTime}, #{updateTime}
+        )
+    </insert>
+
+    <select id="queryById" resultType="com.xzb.pojo.Student">
+        select s.*, c.name clazz_name
+        from student s left join clazz c
+        on s.clazz_id = c.id
+        where s.id = #{id}
+    </select>
+
+    <update id="update">
+    UPDATE student
+    <set>
+        <if test="name != null and name != ''"> name = #{name},</if>
+        <if test="no != null and no != ''"> no = #{no},</if>
+        <if test="gender != null"> gender = #{gender},</if>
+        <if test="phone != null and phone != ''"> phone = #{phone}, </if>
+        <if test="idCard != null and idCard != ''"> id_card = #{idCard},</if>
+        <if test="isCollege != null"> is_college = #{isCollege},</if>
+        <if test="address != null and address != ''"> address = #{address},</if>
+        <if test="degree != null"> degree = #{degree},</if>
+        <if test="graduationDate != null"> graduation_date = #{graduationDate},</if>
+        <if test="clazzId != null">  clazz_id = #{clazzId},</if>
+        <if test="violationCount != null">  violation_count = #{violationCount},</if>
+        <if test="violationScore != null">  violation_score = #{violationScore},</if>
+        update_time = #{updateTime}
+    </set>
+    WHERE id = #{id}
+    </update>
+
+    <update id="updateScore">
+        update student set violation_score=violation_score+#{score},
+                           violation_count=violation_count+1,
+                           update_time=now()
+         where id = #{id}
+    </update>
+
+    <!--统计学员学历-->
+    <select id="countStuDegreeData" resultType="com.xzb.pojo.StuCountOption">
+        select
+            (case when degree = 1 then '初中'
+                  when degree = 2 then '高中'
+                  when degree = 3 then '大专'
+                  when degree = 4 then '本科'
+                  when degree = 5 then '硕士'
+                  when degree = 6 then '博士'
+                end
+                ) as name,
+            count(*) value
+        from student
+        group by degree order by value
+    </select>
+
+    <!--统计班级人数-->
+    <select id="countClazzCountData" resultType="java.util.Map">
+        SELECT
+            c.name AS cname,
+            COUNT(*) AS count
+        FROM clazz c
+                 LEFT JOIN student s ON c.id = s.clazz_id
+        GROUP BY cname
+        ORDER BY count
+    </select>
+
+</mapper>

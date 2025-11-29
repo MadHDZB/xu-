@@ -1,8 +1,11 @@
 package com.xzb.controller;
 
+import com.xzb.pojo.ClazzCountOption;
 import com.xzb.pojo.JobOption;
 import com.xzb.pojo.Result;
+import com.xzb.pojo.StuCountOption;
 import com.xzb.service.ReportService;
+import com.xzb.service.StuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,5 +35,19 @@ public class ReportController {
         log.info("获取员工性别列表");
         List<Map<String, Object>> genderList = reportService.getEmpGenderData();
         return Result.success(genderList);
+    }
+
+    @GetMapping("/studentDegreeData")
+    public Result getStuDegreeOption(){
+        log.info("获取学员学历列表");
+        List<StuCountOption> list = reportService.getStuDegreeData();
+        return Result.success(list);
+    }
+
+    @GetMapping("/studentCountData")
+    public Result getStuCountOption(){
+        log.info("获取班级人数列表");
+        ClazzCountOption clazzCountOption = reportService.getClazzCountData();
+        return Result.success(clazzCountOption);
     }
 }

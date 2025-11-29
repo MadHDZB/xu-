@@ -71,4 +71,13 @@ public class EmpController {
         empService.update(emp);
         return Result.success();
     }
+
+    /**
+     * 查询所有员工
+     */
+    @GetMapping("/list")
+    public Result queryAll(){
+        List<Emp> list = empService.queryAll();
+        return Result.success(list);
+    }
 }

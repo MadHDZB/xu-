@@ -129,4 +129,11 @@
         group by gender
     </select>
 
+    <!--查询所有员工-->
+    <select id="queryAll" resultType="com.xzb.pojo.Emp">
+        select id, username, password, name, gender, job, salary, image, entry_date, dept_id, create_time, update_time
+        from emp
+        order by update_time desc
+    </select>
+
 </mapper>

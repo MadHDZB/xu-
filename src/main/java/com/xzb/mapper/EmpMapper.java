@@ -5,6 +5,7 @@ import com.xzb.pojo.EmpQueryParam;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -52,4 +53,15 @@ public interface EmpMapper {
      * 统计员工性别数据
      */
     List<Map<String, Object>> countEmpGenderData();
+
+    /**
+     * 查询所有员工
+     */
+    List<Emp> queryAll();
+
+    /**
+     * 根据用户名和密码查询员工信息
+     */
+    @Select("select * from emp where username = #{username} and password = #{password}")
+    Emp selectByUsernameAndPassword(Emp emp);
 }

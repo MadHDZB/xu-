@@ -2,6 +2,7 @@ package com.xzb.service;
 
 import com.xzb.pojo.Emp;
 import com.xzb.pojo.EmpQueryParam;
+import com.xzb.pojo.LoginInfo;
 import com.xzb.pojo.PageResult;
 
 import java.util.List;
@@ -28,4 +29,8 @@ public interface EmpService {
      * 修改员工
      */
     void update(Emp emp);
+
+    List<Emp> queryAll();
+
+    LoginInfo login(Emp emp);
 }

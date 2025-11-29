@@ -1,7 +1,10 @@
 package com.xzb.service.impl;
 
 import com.xzb.mapper.EmpMapper;
+import com.xzb.mapper.StuMapper;
+import com.xzb.pojo.ClazzCountOption;
 import com.xzb.pojo.JobOption;
+import com.xzb.pojo.StuCountOption;
 import com.xzb.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,8 @@ import java.util.Map;
 public class ReportServiceImpl implements ReportService {
     @Autowired
     private EmpMapper empMapper;
+    @Autowired
+    private StuMapper stuMapper;
 
     @Override
     public JobOption getEmpJobData() {
@@ -30,4 +35,19 @@ public class ReportServiceImpl implements ReportService {
     public List<Map<String, Object>> getEmpGenderData() {
         return empMapper.countEmpGenderData();
     }
+
+    @Override
+    public List<StuCountOption> getStuDegreeData() {
+        return stuMapper.countStuDegreeData();
+    }
+
+    @Override
+    public ClazzCountOption getClazzCountData() {
+        List<Map<String, Object>> list = stuMapper.countClazzCountData();
+        List<Object> clazzList = list.stream().map(dataMap -> dataMap.get("cname")).toList();
+        List<Object> dataList = list.stream().map(dataMap -> dataMap.get("count")).toList();
+        return new ClazzCountOption(clazzList, dataList);
+    }
+
+
 }
