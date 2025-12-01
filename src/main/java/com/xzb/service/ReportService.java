@@ -24,7 +24,7 @@ public interface ReportService {
     List<StuCountOption> getStuDegreeData();
 
     /**
-     * 获取残疾人书数据
+     * 获取班级人数数据
      */
     ClazzCountOption getClazzCountData();
 }

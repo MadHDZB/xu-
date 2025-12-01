@@ -1,5 +1,6 @@
 package com.xzb.controller;
 
+import com.xzb.anno.Log;
 import com.xzb.pojo.Dept;
 import com.xzb.pojo.Result;
 import com.xzb.service.DeptService;
@@ -28,6 +29,7 @@ public class DeptController {
     /**
      * 删除部门 - 前端传递的请求参数名与服务端方法形参名一致，直接传递即可
      */
+    @Log
     @DeleteMapping
     public Result delete(Integer id) {  // 这里的@RequestParam省略了
         log.info("根据ID删除部门：{}", id);
@@ -38,6 +40,7 @@ public class DeptController {
     /**
      * 新增部门
      */
+    @Log
     @PostMapping
     public Result insert(@RequestBody Dept dept) {
         log.info("新增部门：{}", dept);
@@ -58,6 +61,7 @@ public class DeptController {
     /**
      * 修改部门
      */
+    @Log
     @PutMapping
     public Result update(@RequestBody Dept dept) {
         log.info("修改部门：{}", dept);
