@@ -6,6 +6,7 @@ import com.xzb.mapper.EmpExprMapper;
 import com.xzb.mapper.EmpMapper;
 import com.xzb.pojo.*;
 import com.xzb.service.EmpService;
+import com.xzb.utils.JWTUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,9 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -112,7 +115,14 @@ public class EmpServiceImpl implements EmpService {
         // 2.判断：判断是否存在这个员工，如果存在，组装登陆成功信息
         if(e != null){
             log.info("员工登陆成功：{}", e);
-            return new LoginInfo(e.getId(), e.getUsername(), e.getName(), "");
+
+            // 生成JWT令牌
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("id", e.getId());
+            claims.put("username", e.getUsername());
+            String jwt = JWTUtils.generateToken(claims);
+
+            return new LoginInfo(e.getId(), e.getUsername(), e.getName(), jwt);
         }
 
         // 3.不存在，返回null
