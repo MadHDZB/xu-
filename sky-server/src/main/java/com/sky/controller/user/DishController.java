@@ -36,6 +36,8 @@ public class DishController {
     @ApiOperation("根据分类id查询菜品")
     public Result<List<DishVO>> list(Long categoryId) {
 
+        //TODO 把缓存处理操作改成注解式的
+
         // 构造Redis中的key，规则：dish_分类id
         String key ="dish_" + categoryId;
 

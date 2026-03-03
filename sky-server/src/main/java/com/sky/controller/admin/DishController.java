@@ -107,6 +107,8 @@ public class DishController {
         return Result.success(list);
     }
 
+    // TODO 把缓存处理操作改成注解式的。看下能不能操作菜品时同时操作对应套餐的缓存
+
     /**
      * 清理缓存数据
      * @param pattern
