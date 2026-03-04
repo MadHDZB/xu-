@@ -6,6 +6,34 @@ sky:
     database: sky_take_out
     username: root
     password: xzb0603
+
+    druid:
+      # 初始连接数
+      initial-size: 5
+      # 最小空闲连接数
+      min-idle: 5
+      # 最大活跃连接数
+      max-active: 20
+      # 获取连接等待超时的时间 (毫秒)
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      max-evictable-idle-time-millis: 900000
+      # 用来检测连接是否有效的 SQL
+      validation-query: SELECT 1
+      # 建议配置为 true，不影响性能，并且保证安全性
+      test-while-idle: true
+      # 申请连接时执行 validationQuery 检测连接是否有效，建议配置为 false
+      test-on-borrow: false
+      # 归还连接时执行 validationQuery 检测连接是否有效，建议配置为 false
+      test-on-return: false
+      # 开启 PSCache，并且指定每个连接上 PSCache 的大小
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+
   redis:
     host: localhost
     port: 6379
