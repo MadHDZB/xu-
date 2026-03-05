@@ -40,10 +40,10 @@ public interface ShoppingCartMapper {
     void delete(Long userId);
 
     /**
-     * 根据用户id删除
+     * 根据id删除
      * @param id
      */
-    @Delete("delete from shopping_cart where user_id = #{id}")
+    @Delete("delete from shopping_cart where id = #{id}")
     void deleteById(Long id);
 
     /**
@@ -51,4 +51,11 @@ public interface ShoppingCartMapper {
      * @param shoppingCarts
      */
     void insertBatch(List<ShoppingCart> shoppingCarts);
+
+    /**
+     * 根据用户id删除
+     * @param userId
+     */
+    @Delete("delete from shopping_cart where user_id = #{userId}")
+    void deleteByUserId(Long userId);
 }
