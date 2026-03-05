@@ -9,6 +9,7 @@ import com.sky.service.DishService;
 import com.sky.vo.DishVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -106,8 +107,6 @@ public class DishController {
         List<Dish> list = dishService.getByCategoryId(categoryId);
         return Result.success(list);
     }
-
-    // TODO 把缓存处理操作改成注解式的。看下能不能操作菜品时同时操作对应套餐的缓存
 
     /**
      * 清理缓存数据
